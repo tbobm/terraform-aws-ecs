@@ -2,6 +2,22 @@
 
 Simple Terraform module to deploy an ECS task using AWS Fargate including addons (Load Balancer, ECR, CI credentials)
 
+## Example usage
+
+```hcl
+module "ecr" {
+  source = "../"
+
+  container = {
+    image = "particuleio/helloworld"
+  }
+
+  vpc = {
+    id = "vpc-xxxxxxxx"
+  }
+}
+```
+
 ## Doc generation
 
 Code formatting and documentation for variables and outputs is generated using
