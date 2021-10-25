@@ -9,6 +9,12 @@ module "ecs" {
   vpc = {
     id = var.vpc.id
   }
+
+  addons = {
+    loadbalancer = {
+      enable = false
+    }
+  }
 }
 
 provider "aws" {
@@ -34,4 +40,8 @@ output "this" {
   value       = module.ecs
   sensitive   = true
   description = "The ECS module outputs."
+}
+
+output "addons" {
+  value = module.ecs.addons
 }
