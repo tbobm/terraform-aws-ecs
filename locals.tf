@@ -34,4 +34,20 @@ locals {
     ports = [80]
   }
   container = merge(local.container_defaults, var.container)
+
+  addons_defaults = {
+    loadbalancer = {
+      enable = true
+    }
+    ecr = {
+      enable = true
+    }
+    iam = {
+      enable = true
+    }
+  }
+  addons = {
+    for key, defaults in local.addons_defaults :
+    key => merge(defaults, lookup(var.addons, key, {}))
+  }
 }

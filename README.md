@@ -81,6 +81,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_addons"></a> [addons](#input\_addons) | Configuration of each addon that can be toggles on and off | `any` | `{}` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region | `string` | `"eu-west-3"` | no |
 | <a name="input_container"></a> [container](#input\_container) | Container configuration to deploy | `any` | `{}` | no |
 | <a name="input_ecr_values"></a> [ecr\_values](#input\_ecr\_values) | AWS ECR configuration | `any` | `{}` | no |
@@ -92,6 +93,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_addons"></a> [addons](#output\_addons) | The Addons configuration |
 | <a name="output_app_url"></a> [app\_url](#output\_app\_url) | The public ALB DNS |
 | <a name="output_aws_region"></a> [aws\_region](#output\_aws\_region) | The AWS region used |
 | <a name="output_container_name"></a> [container\_name](#output\_container\_name) | Container name for the ECS task |

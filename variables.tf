@@ -33,3 +33,9 @@ variable "container" {
   default     = {}
   description = "Container configuration to deploy"
 }
+
+variable "addons" {
+  type        = any
+  default     = {}
+  description = "Configuration of each addon that can be toggles on and off"
+}

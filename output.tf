@@ -4,7 +4,7 @@ output "aws_region" {
 }
 
 output "app_url" {
-  value       = aws_lb.alb.dns_name
+  value       = local.addons.loadbalancer.enable ? aws_lb.alb.0.dns_name : ""
   description = "The public ALB DNS"
 }
 
@@ -42,4 +42,9 @@ output "ecs_service" {
 output "container_name" {
   value       = local.container.name
   description = "Container name for the ECS task"
+}
+
+output "addons" {
+  value       = local.addons
+  description = "The Addons configuration"
 }

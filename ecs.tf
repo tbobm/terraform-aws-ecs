@@ -44,10 +44,14 @@ resource "aws_ecs_service" "service" {
     assign_public_ip = true
   }
 
-  load_balancer {
-    target_group_arn = aws_lb_target_group.group.arn
-    container_name   = local.container.name
-    container_port   = 80
+  dynamic "load_balancer" {
+    for_each = local.addons.loadbalancer.enable ? [1] : []
+
+    content {
+      target_group_arn = aws_lb_target_group.group.0.arn
+      container_name   = local.container.name
+      container_port   = 80
+    }
   }
   deployment_controller {
     type = "ECS"
