@@ -1,5 +1,7 @@
 # Terraform ECS Module
 
+[![terraform-aws-ecs](https://github.com/tbobm/terraform-aws-ecs/actions/workflows/terraform.yml/badge.svg)](https://github.com/tbobm/terraform-aws-ecs/actions/workflows/terraform.yml)
+
 Simple Terraform module to deploy an ECS task using AWS Fargate including addons (Load Balancer, ECR, CI credentials)
 
 ## Example usage
