@@ -4,6 +4,8 @@ Simple Terraform module to deploy an ECS task using AWS Fargate including addons
 
 ## Example usage
 
+### Bootstrapped setup
+
 ```hcl
 module "ecr" {
   source  = "tbobm/ecs/aws"
@@ -15,6 +17,36 @@ module "ecr" {
 
   vpc = {
     id = "vpc-xxxxxxxx"
+  }
+}
+```
+
+### Restricted setup
+
+Simply setup an ECS Cluster and Service based on `container.image`.
+
+```hcl
+module "ecr" {
+  source  = "tbobm/ecs/aws"
+  version = "0.0.1"
+
+  container = {
+    image = "particuleio/helloworld"
+  }
+
+  vpc = {
+    id = "vpc-xxxxxxxx"
+  }
+  addons = {
+    iam = {
+      enabled = false
+    }
+    ecr = {
+      enabled = false
+    }
+    loadbalancer = {
+      enabled = false
+    }
   }
 }
 ```

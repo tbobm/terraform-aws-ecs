@@ -13,6 +13,12 @@ module "ecs" {
     loadbalancer = {
       enable = false
     }
+    ecr = {
+      enable = false
+    }
+    iam = {
+      enable = false
+    }
   }
 }
 
