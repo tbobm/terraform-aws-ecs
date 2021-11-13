@@ -20,12 +20,12 @@ output "publisher_secret_key" {
 }
 
 output "ecr_url" {
-  value       = aws_ecr_repository.this.repository_url
+  value       = local.addons.ecr.enable ? aws_ecr_repository.this.0.repository_url : ""
   description = "The ECR repository URL"
 }
 
 output "ecr_repository_name" {
-  value       = aws_ecr_repository.this.name
+  value       = local.addons.ecr.enable ? aws_ecr_repository.this.0.name : ""
   description = "The ECR repository name"
 }
 
