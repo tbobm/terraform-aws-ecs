@@ -1,5 +1,6 @@
-module "ecr" {
-  source = "../"
+module "ecs" {
+  source  = "tbobm/ecs/aws"
+  version = "0.0.1"
 
   container = {
     image = var.container.image
@@ -30,7 +31,7 @@ variable "container" {
 }
 
 output "this" {
-  value       = module.ecr
+  value       = module.ecs
   sensitive   = true
-  description = "The ECR module outputs."
+  description = "The ECS module outputs."
 }
