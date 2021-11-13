@@ -1,9 +1,11 @@
 resource "aws_iam_user" "publisher" {
+  count = local.addons.iam.enable ? 1 : 0
+
   name = "ecr-publisher"
   path = "/serviceaccounts/"
 }
 
-resource "aws_iam_role" "fargate" {
+resource "aws_iam_role" "this" {
   name = "fargate-role"
   path = "/serviceaccounts/"
   assume_role_policy = jsonencode({
@@ -26,8 +28,9 @@ resource "aws_iam_role" "fargate" {
 
 
 resource "aws_iam_user_policy" "publisher" {
-  name = "ecr-publisher"
-  user = aws_iam_user.publisher.name
+  count = local.addons.iam.enable ? 1 : 0
+  name  = "ecr-publisher"
+  user  = aws_iam_user.publisher.0.name
 
   policy = <<EOF
 {
@@ -61,12 +64,13 @@ EOF
 }
 
 resource "aws_iam_access_key" "publisher" {
-  user = aws_iam_user.publisher.name
+  count = local.addons.iam.enable ? 1 : 0
+  user  = aws_iam_user.publisher.0.name
 }
 
-resource "aws_iam_role_policy" "fargate" {
+resource "aws_iam_role_policy" "this" {
   name = "fargate-execution-role"
-  role = aws_iam_role.fargate.id
+  role = aws_iam_role.this.id
 
   policy = <<EOF
 {

@@ -1,6 +1,5 @@
 module "ecs" {
-  source  = "tbobm/ecs/aws"
-  version = "0.0.1"
+  source = "../"
 
   container = {
     image = var.container.image
@@ -8,6 +7,18 @@ module "ecs" {
 
   vpc = {
     id = var.vpc.id
+  }
+
+  addons = {
+    loadbalancer = {
+      enable = false
+    }
+    ecr = {
+      enable = false
+    }
+    iam = {
+      enable = false
+    }
   }
 }
 
@@ -34,4 +45,8 @@ output "this" {
   value       = module.ecs
   sensitive   = true
   description = "The ECS module outputs."
+}
+
+output "addons" {
+  value = module.ecs.addons
 }

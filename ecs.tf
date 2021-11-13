@@ -1,4 +1,4 @@
-resource "aws_ecs_cluster" "cluster" {
+resource "aws_ecs_cluster" "this" {
   name               = local.ecs["cluster_name"]
   capacity_providers = ["FARGATE"]
 
@@ -8,12 +8,12 @@ resource "aws_ecs_cluster" "cluster" {
   }
 }
 
-resource "aws_ecs_task_definition" "task" {
+resource "aws_ecs_task_definition" "this" {
   family = "service"
   requires_compatibilities = [
     "FARGATE",
   ]
-  execution_role_arn = aws_iam_role.fargate.arn
+  execution_role_arn = aws_iam_role.this.arn
   network_mode       = "awsvpc"
   cpu                = 256
   memory             = 512
@@ -33,21 +33,25 @@ resource "aws_ecs_task_definition" "task" {
   ])
 }
 
-resource "aws_ecs_service" "service" {
+resource "aws_ecs_service" "this" {
   name            = local.ecs.service_name
-  cluster         = aws_ecs_cluster.cluster.id
-  task_definition = aws_ecs_task_definition.task.arn
+  cluster         = aws_ecs_cluster.this.id
+  task_definition = aws_ecs_task_definition.this.arn
   desired_count   = 1
 
   network_configuration {
-    subnets          = data.aws_subnet.subnets.*.id
+    subnets          = data.aws_subnet_ids.this.ids
     assign_public_ip = true
   }
 
-  load_balancer {
-    target_group_arn = aws_lb_target_group.group.arn
-    container_name   = local.container.name
-    container_port   = 80
+  dynamic "load_balancer" {
+    for_each = local.addons.loadbalancer.enable ? [1] : []
+
+    content {
+      target_group_arn = aws_lb_target_group.this.0.arn
+      container_name   = local.container.name
+      container_port   = 80
+    }
   }
   deployment_controller {
     type = "ECS"

@@ -4,6 +4,8 @@ Simple Terraform module to deploy an ECS task using AWS Fargate including addons
 
 ## Example usage
 
+### Bootstrapped setup
+
 ```hcl
 module "ecr" {
   source  = "tbobm/ecs/aws"
@@ -15,6 +17,36 @@ module "ecr" {
 
   vpc = {
     id = "vpc-xxxxxxxx"
+  }
+}
+```
+
+### Restricted setup
+
+Simply setup an ECS Cluster and Service based on `container.image`.
+
+```hcl
+module "ecr" {
+  source  = "tbobm/ecs/aws"
+  version = "0.0.1"
+
+  container = {
+    image = "particuleio/helloworld"
+  }
+
+  vpc = {
+    id = "vpc-xxxxxxxx"
+  }
+  addons = {
+    iam = {
+      enabled = false
+    }
+    ecr = {
+      enabled = false
+    }
+    loadbalancer = {
+      enabled = false
+    }
   }
 }
 ```
@@ -60,27 +92,28 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_ecr_repository.repository](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) | resource |
-| [aws_ecr_repository_policy.policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository_policy) | resource |
-| [aws_ecs_cluster.cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster) | resource |
-| [aws_ecs_service.service](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service) | resource |
-| [aws_ecs_task_definition.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition) | resource |
+| [aws_ecr_repository.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) | resource |
+| [aws_ecr_repository_policy.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository_policy) | resource |
+| [aws_ecs_cluster.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster) | resource |
+| [aws_ecs_service.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service) | resource |
+| [aws_ecs_task_definition.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition) | resource |
 | [aws_iam_access_key.publisher](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
-| [aws_iam_role.fargate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
-| [aws_iam_role_policy.fargate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_iam_role.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_iam_user.publisher](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user_policy.publisher](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy) | resource |
-| [aws_lb.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) | resource |
-| [aws_lb_listener.front_end](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
-| [aws_lb_target_group.group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
-| [aws_subnet.subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
-| [aws_subnet_ids.subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet_ids) | data source |
-| [aws_vpc.vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
+| [aws_lb.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) | resource |
+| [aws_lb_listener.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
+| [aws_lb_target_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
+| [aws_subnet.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
+| [aws_subnet_ids.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet_ids) | data source |
+| [aws_vpc.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_addons"></a> [addons](#input\_addons) | Configuration of each addon that can be toggles on and off | `any` | `{}` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region | `string` | `"eu-west-3"` | no |
 | <a name="input_container"></a> [container](#input\_container) | Container configuration to deploy | `any` | `{}` | no |
 | <a name="input_ecr_values"></a> [ecr\_values](#input\_ecr\_values) | AWS ECR configuration | `any` | `{}` | no |
@@ -92,6 +125,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_addons"></a> [addons](#output\_addons) | The Addons configuration |
 | <a name="output_app_url"></a> [app\_url](#output\_app\_url) | The public ALB DNS |
 | <a name="output_aws_region"></a> [aws\_region](#output\_aws\_region) | The AWS region used |
 | <a name="output_container_name"></a> [container\_name](#output\_container\_name) | Container name for the ECS task |
