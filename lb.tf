@@ -2,7 +2,7 @@ resource "aws_lb" "alb" {
   name               = local.lb["name"]
   internal           = local.lb["internal"]
   load_balancer_type = "application"
-  subnets            = [for s in data.aws_subnet.subnets : s.id]
+  subnets            = data.aws_subnet.subnets.*.id
 }
 
 resource "aws_lb_target_group" "group" {
