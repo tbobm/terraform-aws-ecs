@@ -41,13 +41,13 @@ module "ecr" {
   }
   addons = {
     iam = {
-      enabled = false
+      enable = false
     }
     ecr = {
-      enabled = false
+      enable = false
     }
     loadbalancer = {
-      enabled = false
+      enable = false
     }
   }
 }
