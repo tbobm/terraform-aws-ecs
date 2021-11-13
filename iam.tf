@@ -3,7 +3,7 @@ resource "aws_iam_user" "publisher" {
   path = "/serviceaccounts/"
 }
 
-resource "aws_iam_role" "fargate" {
+resource "aws_iam_role" "this" {
   name = "fargate-role"
   path = "/serviceaccounts/"
   assume_role_policy = jsonencode({
@@ -64,9 +64,9 @@ resource "aws_iam_access_key" "publisher" {
   user = aws_iam_user.publisher.name
 }
 
-resource "aws_iam_role_policy" "fargate" {
+resource "aws_iam_role_policy" "this" {
   name = "fargate-execution-role"
-  role = aws_iam_role.fargate.id
+  role = aws_iam_role.this.id
 
   policy = <<EOF
 {

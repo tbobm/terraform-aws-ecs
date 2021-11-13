@@ -4,7 +4,7 @@ output "aws_region" {
 }
 
 output "app_url" {
-  value       = local.addons.loadbalancer.enable ? aws_lb.alb.0.dns_name : ""
+  value       = local.addons.loadbalancer.enable ? aws_lb.this.0.dns_name : ""
   description = "The public ALB DNS"
 }
 
@@ -20,22 +20,22 @@ output "publisher_secret_key" {
 }
 
 output "ecr_url" {
-  value       = aws_ecr_repository.repository.repository_url
+  value       = aws_ecr_repository.this.repository_url
   description = "The ECR repository URL"
 }
 
 output "ecr_repository_name" {
-  value       = aws_ecr_repository.repository.name
+  value       = aws_ecr_repository.this.name
   description = "The ECR repository name"
 }
 
 output "ecs_cluster" {
-  value       = aws_ecs_cluster.cluster.name
+  value       = aws_ecs_cluster.this.name
   description = "The ECS cluster name"
 }
 
 output "ecs_service" {
-  value       = aws_ecs_service.service.name
+  value       = aws_ecs_service.this.name
   description = "The ECS service name"
 }
 

@@ -1,6 +1,5 @@
 module "ecs" {
-  source  = "tbobm/ecs/aws"
-  version = "0.0.1"
+  source = "../"
 
   container = {
     image = var.container.image
