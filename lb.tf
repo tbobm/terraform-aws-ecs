@@ -4,7 +4,7 @@ resource "aws_lb" "this" {
   name               = local.lb["name"]
   internal           = local.lb["internal"]
   load_balancer_type = "application"
-  subnets            = data.aws_subnet.this.*.id
+  subnets            = var.networking["subnet_ids"]
 }
 
 resource "aws_lb_target_group" "this" {
@@ -13,7 +13,7 @@ resource "aws_lb_target_group" "this" {
   name        = local.lb.target_group["name"]
   port        = local.lb.target_group["port"]
   protocol    = local.lb.target_group["protocol"]
-  vpc_id      = data.aws_vpc.this.id
+  vpc_id      = var.networking["vpc_id"]
   target_type = "ip"
 
   depends_on = [aws_lb.this.0]

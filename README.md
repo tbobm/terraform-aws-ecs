@@ -17,8 +17,9 @@ module "ecr" {
     image = "particuleio/helloworld"
   }
 
-  vpc = {
-    id = "vpc-xxxxxxxx"
+  networking = {
+    vpc_id = "vpc-xxxxxxxx"
+    subnet_ids = ["subnet-xxxxxxxx"]
   }
 }
 ```
@@ -36,8 +37,9 @@ module "ecr" {
     image = "particuleio/helloworld"
   }
 
-  vpc = {
-    id = "vpc-xxxxxxxx"
+  networking = {
+    vpc_id = "vpc-xxxxxxxx"
+    subnet_ids = ["subnet-xxxxxxxx"]
   }
   addons = {
     iam = {
@@ -107,9 +109,6 @@ No modules.
 | [aws_lb.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) | resource |
 | [aws_lb_listener.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
 | [aws_lb_target_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
-| [aws_subnet.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
-| [aws_subnet_ids.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet_ids) | data source |
-| [aws_vpc.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
 
 ## Inputs
 
@@ -121,7 +120,7 @@ No modules.
 | <a name="input_ecr_values"></a> [ecr\_values](#input\_ecr\_values) | AWS ECR configuration | `any` | `{}` | no |
 | <a name="input_ecs_values"></a> [ecs\_values](#input\_ecs\_values) | AWS ECS configuration | `any` | `{}` | no |
 | <a name="input_lb_values"></a> [lb\_values](#input\_lb\_values) | AWS Load Balancer configuration | `any` | `{}` | no |
-| <a name="input_vpc"></a> [vpc](#input\_vpc) | AWS VPC configuration | `any` | `{}` | no |
+| <a name="input_networking"></a> [networking](#input\_networking) | AWS networking configuration (subnet\_ids, vpc\_id) | <pre>object({<br>    vpc_id     = string<br>    subnet_ids = list(string)<br>  })</pre> | n/a | yes |
 
 ## Outputs
 

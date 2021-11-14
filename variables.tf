@@ -22,10 +22,12 @@ variable "lb_values" {
   description = "AWS Load Balancer configuration"
 }
 
-variable "vpc" {
-  type        = any
-  default     = {}
-  description = "AWS VPC configuration"
+variable "networking" {
+  type = object({
+    vpc_id     = string
+    subnet_ids = list(string)
+  })
+  description = "AWS networking configuration (subnet_ids, vpc_id)"
 }
 
 variable "container" {
