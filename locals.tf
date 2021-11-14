@@ -22,12 +22,6 @@ locals {
   }
   lb = merge(local.lb_defaults, var.lb_values)
 
-  vpc_defaults = {
-    id = ""
-  }
-  vpc             = merge(local.vpc_defaults, var.vpc)
-  use_default_vpc = local.vpc.id == ""
-
   container_defaults = {
     name  = "application"
     image = "particule/helloworld"

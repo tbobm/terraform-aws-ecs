@@ -5,19 +5,20 @@ module "ecs" {
     image = var.container.image
   }
 
-  vpc = {
-    id = var.vpc.id
+  networking = {
+    vpc_id     = var.vpc_id
+    subnet_ids = data.aws_subnet_ids.this.ids
   }
 
   addons = {
     loadbalancer = {
-      enable = false
+      enable = true
     }
     ecr = {
-      enable = false
+      enable = true
     }
     iam = {
-      enable = false
+      enable = true
     }
   }
 }
@@ -31,14 +32,22 @@ variable "aws_region" {
   description = "The AWS Region used to configure the AWS provider."
 }
 
-variable "vpc" {
-  type        = map(string)
-  description = "The AWS VPC configuration in which the ECS tasks will run."
+variable "vpc_id" {
+  type        = string
+  description = "The AWS VPC ID in which the ECS tasks will run."
 }
 
 variable "container" {
   type        = map(string)
   description = "The ECS Task simplified configuration."
+}
+
+data "aws_vpc" "this" {
+  id = var.vpc_id
+}
+
+data "aws_subnet_ids" "this" {
+  vpc_id = data.aws_vpc.this.id
 }
 
 output "this" {
