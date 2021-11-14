@@ -11,7 +11,7 @@ Simple Terraform module to deploy an ECS task using AWS Fargate including addons
 ```hcl
 module "ecr" {
   source  = "tbobm/ecs/aws"
-  version = "0.0.1"
+  # version = "" use latest version
 
   container = {
     image = "particuleio/helloworld"
@@ -31,7 +31,7 @@ Simply setup an ECS Cluster and Service based on `container.image`.
 ```hcl
 module "ecr" {
   source  = "tbobm/ecs/aws"
-  version = "0.0.1"
+  # version = "" use latest version
 
   container = {
     image = "particuleio/helloworld"
