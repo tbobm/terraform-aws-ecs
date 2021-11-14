@@ -23,6 +23,18 @@ resource "aws_lb" "this" {
     }
   }
 
+  dynamic "subnet_mapping" {
+    for_each = lookup(local.lb, "subnet_mapping", {}) != {} ? [1] : []
+
+    content {
+      subnet_id = local.lb.subnet_mapping["subnet_id"]
+
+      allocation_id        = lookup(local.lb.subnet_mapping, "allocation_id", "")
+      private_ipv4_address = lookup(local.lb.subnet_mapping, "private_ipv4_address", "")
+      ipv6_address         = lookup(local.lb.subnet_mapping, "ipv6_address", "")
+    }
+  }
+
   tags = lookup(local.lb, "tags", {})
 }
 
