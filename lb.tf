@@ -1,10 +1,18 @@
 resource "aws_lb" "this" {
-  count = local.addons.loadbalancer.enable == true ? 1 : 0
+  count = local.addons.loadbalancer.enable ? 1 : 0
 
-  name               = local.lb["name"]
+  name        = lookup(local.lb, "name", null)
+  name_prefix = lookup(local.lb, "name_prefix", null)
+
   internal           = local.lb["internal"]
   load_balancer_type = "application"
-  subnets            = var.networking["subnet_ids"]
+
+  subnets         = var.networking["subnet_ids"]
+  security_groups = lookup(local.lb, "security_groups", [])
+
+  enable_deletion_protection = lookup(local.lb, "enable_deletion_protection", false)
+
+  tags = lookup(local.lb, "tags", {})
 }
 
 resource "aws_lb_target_group" "this" {
