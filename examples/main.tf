@@ -10,6 +10,10 @@ module "ecs" {
     subnet_ids = data.aws_subnet_ids.this.ids
   }
 
+  ecs_values = {
+    ecs_task_arn = ""
+  }
+
   addons = {
     loadbalancer = {
       enable = true

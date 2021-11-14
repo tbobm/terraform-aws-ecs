@@ -8,6 +8,7 @@ locals {
   ecs_defaults = {
     cluster_name = "ecs-cluster"
     service_name = "ecs-service"
+    ecs_task_arn = null
   }
   ecs = merge(local.ecs_defaults, var.ecs_values)
 
