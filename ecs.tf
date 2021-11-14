@@ -9,6 +9,8 @@ resource "aws_ecs_cluster" "this" {
 }
 
 resource "aws_ecs_task_definition" "this" {
+  count = lookup(local.ecs, "ecs_task_arn", "") != "" ? 0 : 1
+
   family = "service"
   requires_compatibilities = [
     "FARGATE",
@@ -36,7 +38,7 @@ resource "aws_ecs_task_definition" "this" {
 resource "aws_ecs_service" "this" {
   name            = local.ecs.service_name
   cluster         = aws_ecs_cluster.this.id
-  task_definition = aws_ecs_task_definition.this.arn
+  task_definition = lookup(local.ecs, "ecs_task_arn", "") != "" ? local.ecs.ecs_task_arn : aws_ecs_task_definition.this.0.arn
   desired_count   = 1
 
   network_configuration {
