@@ -12,6 +12,17 @@ resource "aws_lb" "this" {
 
   enable_deletion_protection = lookup(local.lb, "enable_deletion_protection", false)
 
+  dynamic "access_logs" {
+    for_each = lookup(local.lb, "access_logs", {}) != {} ? [1] : []
+
+    content {
+      bucket = local.lb.access_logs["bucket"]
+
+      prefix  = lookup(local.lb.access_logs, "prefix", "")
+      enabled = lookup(local.lb.access_logs, "enabled", false)
+    }
+  }
+
   tags = lookup(local.lb, "tags", {})
 }
 
