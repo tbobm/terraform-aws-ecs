@@ -55,6 +55,23 @@ module "ecr" {
 }
 ```
 
+### Use an external ECS Task definition
+
+```hcl
+module "ecr" {
+  source  = "tbobm/ecs/aws"
+  # version = "" use latest version
+
+  ecs_values = {
+    ecs_task_arn = "arn:aws:ecs:<region>:<aws_account_id>:task-definition/<task_family>:1"
+  }
+  networking = {
+    vpc_id = "vpc-xxxxxxxx"
+    subnet_ids = ["subnet-xxxxxxxx"]
+  }
+}
+```
+
 ## Doc generation
 
 Code formatting and documentation for variables and outputs is generated using
