@@ -134,6 +134,7 @@ No modules.
 | <a name="output_ecr_url"></a> [ecr\_url](#output\_ecr\_url) | The ECR repository URL |
 | <a name="output_ecs_cluster"></a> [ecs\_cluster](#output\_ecs\_cluster) | The ECS cluster name |
 | <a name="output_ecs_service"></a> [ecs\_service](#output\_ecs\_service) | The ECS service name |
+| <a name="output_loadbalancer"></a> [loadbalancer](#output\_loadbalancer) | The AWS Load Balancer resources (`loadbalancer`, `target_group` and `lb_listener`) |
 | <a name="output_publisher_access_key"></a> [publisher\_access\_key](#output\_publisher\_access\_key) | AWS\_ACCESS\_KEY to publish to ECR |
 | <a name="output_publisher_secret_key"></a> [publisher\_secret\_key](#output\_publisher\_secret\_key) | AWS\_SECRET\_ACCESS\_KEY to upload to the ECR |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -12,7 +12,6 @@ locals {
   ecs = merge(local.ecs_defaults, var.ecs_values)
 
   lb_defaults = {
-    name     = "tf-alb"
     internal = false
     target_group = {
       name     = "tf-alb-tg"

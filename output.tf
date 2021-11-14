@@ -8,6 +8,15 @@ output "app_url" {
   description = "The public ALB DNS"
 }
 
+output "loadbalancer" {
+  value = !local.addons.loadbalancer.enable ? null : {
+    loadbalancer = aws_lb.this.0
+    target_group = aws_lb_target_group.this.0
+    lb_listener  = aws_lb_listener.this.0
+  }
+  description = "The AWS Load Balancer resources (`loadbalancer`, `target_group` and `lb_listener`)"
+}
+
 output "publisher_access_key" {
   value       = local.addons.iam.enable ? aws_iam_access_key.publisher.0.id : ""
   description = "AWS_ACCESS_KEY to publish to ECR"
